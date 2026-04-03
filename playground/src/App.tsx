@@ -35,7 +35,7 @@ export function App() {
       }}
       fields={[
         { id: "firstName" },
-        { id: "lastName" },
+        { id: "lastName", fieldProps: { placeholder: "Last Name" }, registerProps: { required: true } },
         { id: "hasMiddleName", kind: "checkbox" },
         { id: "middleName" },
         {
