@@ -9,6 +9,8 @@ export type FieldConfig = {
   id: string
   kind?: string
   options?: FieldOption[]
+  fieldProps?: Record<string, unknown>
+  registerProps?: Record<string, unknown>
 }
 
 export type FieldRendererProps = {

@@ -11,7 +11,14 @@ type SmartFieldProps = FieldConfig & {
 }
 
 export function SmartField(props: SmartFieldProps) {
-  const { id, kind, options: baseOptions, fieldRegistry } = props
+  const {
+    id,
+    kind,
+    fieldProps: baseFieldProps,
+    registerProps: baseRegisterProps,
+    options: baseOptions,
+    fieldRegistry,
+  } = props
 
   const { register } = useFormContext()
   const fieldOptions = useFieldOptions(id)
@@ -31,8 +38,8 @@ export function SmartField(props: SmartFieldProps) {
 
   return renderer({
     field: { id, kind, options },
-    fieldProps,
+    fieldProps: { ...baseFieldProps, ...fieldProps },
     register,
-    registerProps: registerProps as RegisterOptions,
+    registerProps: { ...baseRegisterProps, ...registerProps } as RegisterOptions,
   })
 }
