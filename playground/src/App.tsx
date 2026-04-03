@@ -1,4 +1,10 @@
-import { FormBuilder, OptionsSourceType } from "@team-good-io/react-form-builder"
+import {
+  FormBuilder,
+  OptionsSourceType,
+} from "@team-good-io/react-form-builder"
+
+import { effectPresets } from "./config"
+import { createEffectsConfigFromPresets } from "./utils/effectsConfig"
 
 const cityOptionsByCountry: Record<string, { label: string; value: string }[]> = {
   us: [
@@ -66,136 +72,18 @@ export function App() {
 
         return cityOptionsByCountry[country] || []
       }}
-      effectsConfig={{
-        rules: [
-          {
-            id: "disable-last-name-for-john",
-            when: {
-              field: "firstName",
-              operator: "===",
-              value: "John",
-            },
-            actions: [
-              {
-                type: "setFieldProps",
-                targets: ["lastName"],
-                value: { disabled: true },
-                skipOnInit: true,
-              },
-              {
-                type: "setValue",
-                targets: ["lastName"],
-                value: "Doe",
-                skipOnInit: true,
-              },
-            ],
-          },
-          {
-            id: "enable-last-name-for-non-john",
-            when: {
-              field: "firstName",
-              operator: "!==",
-              value: "John",
-            },
-            actions: [
-              {
-                type: "setFieldProps",
-                targets: ["lastName"],
-                value: { disabled: false },
-              },
-            ],
-          },
-          {
-            id: "show-middle-name",
-            when: {
-              field: "hasMiddleName",
-              operator: "===",
-              value: true,
-            },
-            actions: [
-              {
-                type: "showField",
-                targets: ["middleName"],
-              },
-            ],
-          },
-          {
-            id: "hide-middle-name",
-            when: {
-              field: "hasMiddleName",
-              operator: "===",
-              value: false,
-            },
-            actions: [
-              {
-                type: "hideField",
-                targets: ["middleName"],
-                unregister: true,
-              },
-              {
-                type: "resetField",
-                targets: ["middleName"],
-              },
-              {
-                type: "clearErrors",
-                targets: ["middleName"],
-              },
-            ],
-          },
-          {
-            id: "reset-city-on-country-change",
-            when: {
-              field: "country",
-              operator: "!==",
-              value: "",
-            },
-            actions: [
-              {
-                type: "resetField",
-                targets: ["city"],
-                skipOnInit: true,
-              },
-            ],
-          },
-          {
-            id: "show-email-when-subscribed",
-            when: {
-              field: "subscribe",
-              operator: "===",
-              value: true,
-            },
-            actions: [
-              {
-                type: "showField",
-                targets: ["email"],
-              },
-            ],
-          },
-          {
-            id: "hide-email-when-unsubscribed",
-            when: {
-              field: "subscribe",
-              operator: "===",
-              value: false,
-            },
-            actions: [
-              {
-                type: "hideField",
-                targets: ["email"],
-                unregister: true,
-              },
-              {
-                type: "resetField",
-                targets: ["email"],
-              },
-              {
-                type: "clearErrors",
-                targets: ["email"],
-              },
-            ],
-          },
+      effectsConfig={createEffectsConfigFromPresets({
+        presets: effectPresets,
+        presetKeys: [
+          "disable-last-name-for-john",
+          "enable-last-name-for-non-john",
+          "show-middle-name",
+          "hide-middle-name",
+          "reset-city-on-country-change",
+          "show-email-when-subscribed",
+          "hide-email-when-unsubscribed",
         ],
-      }}
+      })}
       onSubmit={handleSubmit}
     />
   )

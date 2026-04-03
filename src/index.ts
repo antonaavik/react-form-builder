@@ -1,5 +1,5 @@
 export { FormBuilder } from "./FormBuilder"
-export type { EffectsConfig } from "./modules/effects"
+export type { EffectRule,EffectsConfig } from "./modules/effects"
 export type {
   Option,
   OptionsConfig,
